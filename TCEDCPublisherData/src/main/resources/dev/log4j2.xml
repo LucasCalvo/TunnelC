@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="ENVIROMENT">
+			DEV
+		</Property>
+		<Property name="PROJECT">
+			TCEDCPublisherDataService
+		</Property>		
+		<Property name="LOG_PATTERN">
+			[${ENVIROMENT}] %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="RollingFile" fileName="c:/logs/${PROJECT}/${PROJECT}.log" filePattern="c:/logs/${PROJECT}/${PROJECT}-%d{yyyyMMdd}-%i.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="9" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.tunnelcuriosity" level="info" additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+		
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>

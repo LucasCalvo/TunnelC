@@ -1,0 +1,101 @@
+---
+spring:
+  profiles: dev
+server: 
+  port: 7085
+logging:
+  config: classpath:dev/log4j2.xml  
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+---
+spring:
+  profiles: dev-linux
+server: 
+  port: 7085
+logging:
+  config: classpath:dev-linux/log4j2.xml  
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka      
+---
+spring:
+  profiles: local1
+server:
+  port: 17085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://localhost:1111/eureka
+---
+spring:
+  profiles: local2
+server:
+  port: 17085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://localhost:2222/eureka
+---
+spring:
+  profiles: local3
+server:
+  port: 17085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://localhost:3333/eureka
+---
+spring:
+  profiles: edc01
+logging:
+  config: classpath:pro/log4j2.xml  
+server:
+  port: 7085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://edc01:8761/eureka
+---
+spring:
+  profiles: edc02
+logging:
+  config: classpath:pro/log4j2.xml  
+server:
+  port: 7085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://edc02:8761/eureka
+---
+spring:
+  profiles: edc03
+logging:
+  config: classpath:pro/log4j2.xml  
+server:
+  port: 7085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://edc03:8761/eureka
+---
+spring:
+  profiles: edc04
+logging:
+  config: classpath:pro/log4j2.xml  
+server:
+  port: 7085
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://edc04:8761/eureka

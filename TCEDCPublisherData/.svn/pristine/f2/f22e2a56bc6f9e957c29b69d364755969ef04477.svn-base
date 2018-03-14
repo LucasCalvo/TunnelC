@@ -1,0 +1,135 @@
+package com.tinamica.tunnelc.publisherincidence.exceptions;
+
+import java.io.Serializable;
+
+
+public class TCEDCPublisherIncidenceServiceException extends RuntimeException implements Serializable {
+
+	private static final long serialVersionUID = 241100997211249L;
+	private TCEDCPublisherIncidenceServiceError error = null;
+	private String errorID;
+	private String operationID;
+	private int severity = ERROR;
+	private Exception exception;
+	
+	public static final int FATAL = -100;
+	public static final int ERROR = -200;
+	public static final int WARNING = -300;
+	public static final int INFORMATIVE = -400;
+	
+	public TCEDCPublisherIncidenceServiceException() {
+		
+	}
+
+	public TCEDCPublisherIncidenceServiceException(TCEDCPublisherIncidenceServiceError error, String errorID,
+			String operationID, int severity, Exception exception) {
+		super();
+		this.error = error;
+		this.errorID = errorID;
+		this.operationID = operationID;
+		this.severity = severity;
+		this.exception = exception;
+	}
+
+	public TCEDCPublisherIncidenceServiceException(String message, Throwable cause, TCEDCPublisherIncidenceServiceError error, String errorId, String operationId, int severity, Exception exception) {
+		super(cause);
+		this.error = error;
+		this.errorID = errorId;
+		this.operationID = operationId;
+		this.severity = severity;
+		this.exception = exception;
+	}
+
+	public TCEDCPublisherIncidenceServiceError getError() {
+		return error;
+	}
+
+	public void setError(TCEDCPublisherIncidenceServiceError error) {
+		this.error = error;
+	}
+
+	public String getErrorID() {
+		return errorID;
+	}
+
+	public void setErrorID(String errorID) {
+		this.errorID = errorID;
+	}
+
+	public String getOperationID() {
+		return operationID;
+	}
+
+	public void setOperationID(String operationID) {
+		this.operationID = operationID;
+	}
+
+	public int getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(int severity) {
+		this.severity = severity;
+	}
+
+	public Exception getException() {
+		return exception;
+	}
+
+	public void setException(Exception exception) {
+		this.exception = exception;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((error == null) ? 0 : error.hashCode());
+		result = prime * result + ((errorID == null) ? 0 : errorID.hashCode());
+		result = prime * result + ((exception == null) ? 0 : exception.hashCode());
+		result = prime * result + ((operationID == null) ? 0 : operationID.hashCode());
+		result = prime * result + severity;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TCEDCPublisherIncidenceServiceException other = (TCEDCPublisherIncidenceServiceException) obj;
+		if (error == null) {
+			if (other.error != null)
+				return false;
+		} else if (!error.equals(other.error))
+			return false;
+		if (errorID == null) {
+			if (other.errorID != null)
+				return false;
+		} else if (!errorID.equals(other.errorID))
+			return false;
+		if (exception == null) {
+			if (other.exception != null)
+				return false;
+		} else if (!exception.equals(other.exception))
+			return false;
+		if (operationID == null) {
+			if (other.operationID != null)
+				return false;
+		} else if (!operationID.equals(other.operationID))
+			return false;
+		if (severity != other.severity)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TCEDCPublisherIncidenceServiceException [error=" + error + ", errorID=" + errorID + ", operationID="
+				+ operationID + ", severity=" + severity + ", exception=" + exception + "]";
+	}
+
+}

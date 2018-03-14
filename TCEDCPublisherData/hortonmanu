@@ -1,0 +1,27 @@
+create table default.prueba (
+ID STRING,
+DATETIME STRING,
+COUNTRY STRING,
+OS STRING, 
+TIME1 STRING, 
+TIME2 STRING
+)row format delimited fields terminated by "\;"
+lines terminated BY '\n' 
+tblproperties("skip.header.line.count"="1"); 
+    
+    
+    load data inpath '/user/manualrg/definitivo.csv' into table default.prueba
+    
+    create table default.prueba (
+ID STRING,
+DATETIME STRING,
+COUNTRY STRING,
+OS STRING, 
+TIME1 STRING, 
+TIME2 STRING
+)ROW FORMAT SERDE'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES ('separatorChar' = ';')TBLPROPERTIES ('skip.header.line.count' = '1');
+
+
+./kafka-console-consumer.sh --bootstrap-server 10.132.0.2:9092,10.132.0.3:9092,10.132.0.4:9092 --topic test --from-beginning
+./kafka-topics.sh --list --zookeeper 10.132.0.2:2181,10.132.0.3:2181,10.132.0.4:2181

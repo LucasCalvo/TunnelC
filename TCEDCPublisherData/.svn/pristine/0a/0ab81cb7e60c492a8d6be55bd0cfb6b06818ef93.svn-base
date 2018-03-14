@@ -1,0 +1,50 @@
+package com.tinamica.tunnelc.publisherincidence.endpoint;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tinamica.tunnelc.global.beans.Ack;
+import com.tinamica.tunnelc.global.beans.railwayincidences.TrackTracerGeoIncidences;
+import com.tinamica.tunnelc.publisherincidence.data.TCBigQueryWrapper;
+import com.tinamica.tunnelc.publisherincidence.exceptions.TCEDCPublisherIncidenceServiceError;
+import com.tinamica.tunnelc.publisherincidence.exceptions.TCEDCPublisherIncidenceServiceException;
+
+@Service
+public class ProxyService {
+	
+    private StringBuffer sb;
+
+    private static String _component = "[ProxyService]";
+
+    /** Logger Object **/
+    private static Logger _logger = LoggerFactory.getLogger(ProxyService.class);
+
+    @Autowired
+    private TCBigQueryWrapper tcBigQueryWrapper;
+    
+    public Ack consolidateBigQuery(List<TrackTracerGeoIncidences> trackTracerGeoIncidences) throws TCEDCPublisherIncidenceServiceException {
+        Ack ack = null;
+        try {
+            _logger.info("[........TCEDCPublisherIncidenceService:ProxyService:consolidateBigQuery .......Init Sequence]");
+            for(int i=0;i<trackTracerGeoIncidences.size();i++) {
+            	 ack = tcBigQueryWrapper.consolidateBigQuery(trackTracerGeoIncidences.get(i));
+            }
+           
+            _logger.info("[........TCEDCPublisherIncidenceService:ProxyService:consolidateBigQuery .......Ends Sequence]");
+        }
+        catch (TCEDCPublisherIncidenceServiceException fdce){
+            throw fdce;
+        }
+        catch (Exception e){
+            _logger.error("ERROR .: " + e.fillInStackTrace());
+            sb = new StringBuffer();
+            TCEDCPublisherIncidenceServiceError error = new TCEDCPublisherIncidenceServiceError(this.getClass().getName(), String.valueOf(TCEDCPublisherIncidenceServiceException.ERROR), sb.append("Error .: ").append(e.fillInStackTrace()).toString(), e.getCause());
+            throw new TCEDCPublisherIncidenceServiceException(error, _component+"[01]", "[consolidateBigQuery]", TCEDCPublisherIncidenceServiceException.ERROR, e);
+        }
+        return ack;
+    }
+}
